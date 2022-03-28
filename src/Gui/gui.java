@@ -6,25 +6,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class gui{
-    static int guessNrInt = 0;
-    static JLabel hintText = new JLabel("Guess a number between 0 and 10: ");
-    static JLabel feedback = new JLabel();
-    static JLabel bestScore = new JLabel("Best Score: XX");
-    static JLabel guessNr = new JLabel("Guess nr.: 0");
-    static JLabel gameNr = new JLabel("Game nr.: XX");
-    static JTextField input = new JTextField(1);
-    static JButton button = new JButton("Send");
+    int guessNrInt = 0;
+    JLabel hintText = new JLabel("Guess a number between 0 and 10: ");
+    JLabel feedback = new JLabel();
+    JLabel bestScore = new JLabel("Best Score: XX");
+    JLabel guessNr = new JLabel("Guess nr.: 0");
+    JLabel gameNr = new JLabel("Game nr.: XX");
+    JTextField input = new JTextField(1);
+    JButton button = new JButton("Send");
 
-    public static void setFeedback(String str) {
+    public void setFeedback(String str) {
         feedback.setText(str);
     }
 
-    public static void updateGuessNr() {
+    public void updateGuessNr() {
         guessNrInt++;
         guessNr.setText("Guess nr.: " + guessNrInt);
     }
 
-    public static void main(){
+    public void render(){
 
         // make JFrame
         JFrame frame = new JFrame("My First GUI");
