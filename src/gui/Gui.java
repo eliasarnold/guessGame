@@ -1,12 +1,15 @@
-package Gui;
-import App.main;
+package gui;
+import app.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Objects;
 
-public class gui{
-    int guessNrInt = 0;
+public class Gui{
+    Game game;
     JLabel hintText = new JLabel("Guess a number between 0 and 10: ");
     JLabel feedback = new JLabel();
     JLabel bestScore = new JLabel("Best Score: XX");
@@ -15,13 +18,16 @@ public class gui{
     JTextField input = new JTextField(1);
     JButton button = new JButton("Send");
 
+    public Gui (Game game) {
+        this.game = game;
+    }
+
     public void setFeedback(String str) {
         feedback.setText(str);
     }
 
     public void updateGuessNr() {
-        guessNrInt++;
-        guessNr.setText("Guess nr.: " + guessNrInt);
+        guessNr.setText("Guess nr.: " + this.game.guessNo);
     }
 
     public void render(){
@@ -37,9 +43,21 @@ public class gui{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.write(input.getText());
-                setFeedback("Hoooodie");
+                int inputNo = Integer.parseInt(input.getText());
+                setFeedback(game.getFeedback(inputNo));
                 updateGuessNr();
+                game.write(String.valueOf(game.targetNo));
+            }
+        });
+
+        input.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                char c = e.getKeyChar();
+                if(Objects.equals(input.getText(), ""))
+                    input.setEditable((c >= '0') && (c <= '9'));
+                else
+                    input.setEditable(c == KeyEvent.VK_BACK_SPACE);
             }
         });
 
