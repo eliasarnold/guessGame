@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class Gui{
+    boolean restartReady = false;
     Game game;
     JLabel hintText = new JLabel("Guess a number between 0 and 10: ");
     JLabel feedback = new JLabel();
@@ -17,6 +18,7 @@ public class Gui{
     JLabel gameNr = new JLabel("Game nr.: XX");
     JTextField input = new JTextField(1);
     JButton button = new JButton("Send");
+    JButton restart = new JButton("restart");
 
     public Gui (Game game) {
         this.game = game;
@@ -28,6 +30,10 @@ public class Gui{
 
     public void updateGuessNr() {
         guessNr.setText("Guess nr.: " + this.game.guessNo);
+    }
+
+    public void toggleRestartButton() {
+        this.restartReady = !this.restartReady;
     }
 
     public void render(){
@@ -46,7 +52,23 @@ public class Gui{
                 int inputNo = Integer.parseInt(input.getText());
                 setFeedback(game.getFeedback(inputNo));
                 updateGuessNr();
-                game.write(String.valueOf(game.targetNo));
+                if(restartReady) {
+                    button.setEnabled(false);
+                    restart.setEnabled(true);
+                }
+            }
+        });
+
+        restart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restartReady = false;
+                button.setEnabled(true);
+                restart.setEnabled(false);
+                Game new_game = new Game();
+                Main.pushOldGame(game);
+                game = new_game;
+                game.setGui(Gui.this);
             }
         });
 
@@ -61,9 +83,11 @@ public class Gui{
             }
         });
 
+        restart.setEnabled(false);
         top.add(hintText);
         top.add(input);
         top.add(button);
+        top.add(restart);
 
         // make middle panel
         JPanel middle = new JPanel();
