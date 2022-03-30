@@ -1,11 +1,9 @@
 package app;
 import gui.Gui;
 
-public class Main {
+import java.util.ArrayList;
 
-    public static void pushOldGame(Game game) {
-        System.out.println(game.guessNo);
-    }
+public class Main {
 
     public static void main (String[] args) {
         Game game = new Game();
