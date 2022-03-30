@@ -3,10 +3,6 @@ import gui.Gui;
 
 public class Main {
 
-    public static void pushOldGame(Game game) {
-        System.out.println(game.guessNo);
-    }
-
     public static void main (String[] args) {
         Game game = new Game();
         Gui graphics = new Gui(game);
